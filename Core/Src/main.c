@@ -43,10 +43,31 @@
 /* Private variables ---------------------------------------------------------*/
 UART_HandleTypeDef huart2;
 
-/* Definitions for defaultTask */
-osThreadId_t defaultTaskHandle;
-const osThreadAttr_t defaultTask_attributes = {
-  .name = "defaultTask",
+/* Definitions for producerTask1 */
+osThreadId_t producerTask1Handle;
+const osThreadAttr_t producerTask1_attributes = {
+  .name = "producerTask1",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for producerTask2 */
+osThreadId_t producerTask2Handle;
+const osThreadAttr_t producerTask2_attributes = {
+  .name = "producerTask2",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for consumerTask */
+osThreadId_t consumerTaskHandle;
+const osThreadAttr_t consumerTask_attributes = {
+  .name = "consumerTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for watcherTask */
+osThreadId_t watcherTaskHandle;
+const osThreadAttr_t watcherTask_attributes = {
+  .name = "watcherTask",
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
@@ -58,7 +79,10 @@ const osThreadAttr_t defaultTask_attributes = {
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
-void StartDefaultTask(void *argument);
+void task1_produce_data(void *argument);
+void task2_produce_data(void *argument);
+void consume_data(void *argument);
+void watch_data(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -143,8 +167,17 @@ int main(void)
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
-  /* creation of defaultTask */
-  defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+  /* creation of producerTask1 */
+  producerTask1Handle = osThreadNew(task1_produce_data, NULL, &producerTask1_attributes);
+
+  /* creation of producerTask2 */
+  producerTask2Handle = osThreadNew(task2_produce_data, NULL, &producerTask2_attributes);
+
+  /* creation of consumerTask */
+  consumerTaskHandle = osThreadNew(consume_data, NULL, &consumerTask_attributes);
+
+  /* creation of watcherTask */
+  watcherTaskHandle = osThreadNew(watch_data, NULL, &watcherTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -290,14 +323,14 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE END 4 */
 
-/* USER CODE BEGIN Header_StartDefaultTask */
+/* USER CODE BEGIN Header_task1_produce_data */
 /**
-  * @brief  Function implementing the defaultTask thread.
+  * @brief  Function implementing the producerTask1 thread.
   * @param  argument: Not used
   * @retval None
   */
-/* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void *argument)
+/* USER CODE END Header_task1_produce_data */
+void task1_produce_data(void *argument)
 {
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
@@ -306,6 +339,60 @@ void StartDefaultTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END 5 */
+}
+
+/* USER CODE BEGIN Header_task2_produce_data */
+/**
+* @brief Function implementing the producerTask2 thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_task2_produce_data */
+void task2_produce_data(void *argument)
+{
+  /* USER CODE BEGIN task2_produce_data */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END task2_produce_data */
+}
+
+/* USER CODE BEGIN Header_consume_data */
+/**
+* @brief Function implementing the consumerTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_consume_data */
+void consume_data(void *argument)
+{
+  /* USER CODE BEGIN consume_data */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END consume_data */
+}
+
+/* USER CODE BEGIN Header_watch_data */
+/**
+* @brief Function implementing the watcherTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_watch_data */
+void watch_data(void *argument)
+{
+  /* USER CODE BEGIN watch_data */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END watch_data */
 }
 
 /**
