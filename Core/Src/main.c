@@ -72,6 +72,12 @@ const osThreadAttr_t watcherTask_attributes = {
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* USER CODE BEGIN PV */
+struct _data {
+  int t1value;
+  char t1str[10];
+  int t2value;
+  char t2str[10];
+} data;
 
 /* USER CODE END PV */
 
@@ -336,6 +342,9 @@ void task1_produce_data(void *argument)
   /* Infinite loop */
   for(;;)
   {
+    data.t1value = data.t1value + 1;
+    //osDelay(1);
+    snprintf(data.t1str, sizeof(data.t1str), "%d", data.t1value);
     osDelay(1);
   }
   /* USER CODE END 5 */
@@ -354,6 +363,9 @@ void task2_produce_data(void *argument)
   /* Infinite loop */
   for(;;)
   {
+    data.t2value = data.t2value + 1;
+    //osDelay(1);
+    snprintf(data.t2str, sizeof(data.t2str), "%d", data.t2value);
     osDelay(1);
   }
   /* USER CODE END task2_produce_data */
@@ -372,7 +384,17 @@ void consume_data(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    if(data.t1value % 2 == 0) {
+      data.t1value = data.t1value / 2;
+      osDelay(50);
+      snprintf(data.t1str, sizeof(data.t1str), "%d", data.t1value);
+    }
+    if(data.t2value % 2 == 0) {
+      data.t2value = data.t2value / 2;
+      osDelay(50);
+      snprintf(data.t2str, sizeof(data.t2str), "%d", data.t2value);
+    }
+    osDelay(2);
   }
   /* USER CODE END consume_data */
 }
@@ -390,7 +412,13 @@ void watch_data(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    //printf("\n\n");
+    printf("t1value: %d t1str: %s | t2value: %d t2str: %s\n", data.t1value, data.t1str, data.t2value, data.t2str);
+    printf("t1value: %d\n", data.t1value);
+    printf("t1str: %s\n", data.t1str);
+    printf("t2value: %d\n", data.t2value);
+    printf("t2str: %s\n", data.t2str);
+    osDelay(90);
   }
   /* USER CODE END watch_data */
 }
