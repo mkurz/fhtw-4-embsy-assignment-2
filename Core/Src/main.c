@@ -33,6 +33,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define VALUE_STR_LENGTH 10
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -74,9 +75,9 @@ const osThreadAttr_t watcherTask_attributes = {
 /* USER CODE BEGIN PV */
 struct _data {
   int t1value;
-  char t1str[10];
+  char t1str[VALUE_STR_LENGTH];
   int t2value;
-  char t2str[10];
+  char t2str[VALUE_STR_LENGTH];
 } data;
 
 /* USER CODE END PV */
