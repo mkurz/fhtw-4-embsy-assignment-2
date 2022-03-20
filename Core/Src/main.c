@@ -2,7 +2,17 @@
 /**
   ******************************************************************************
   * @file           : main.c
-  * @brief          : Main program body
+  * @author         : Matthias Kurz
+  * @brief          : Illustrates intertask synchronization with semaphores.
+  *                   Two producer tasks, in parallel, each increments a number
+  *                   of a global struct and saves the number in the same
+  *                   global struct inside an accompanying char array. Meanwhile,
+  *                   a consumer task divides the values by half (if they are
+  *                   odd) and updates the according char array as well.
+  *                   A fourth task outputs the values and the char array via
+  *                   the UART2. When not using semaphores the number values and
+  *                   their accompanying char arrays diverge. This can be tested
+  *                   by removing the "USE_SEM" define.
   ******************************************************************************
   * @attention
   *
@@ -348,8 +358,10 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 
 /**
-  * @brief  TODO.
-  * @param  count: TODO.
+  * @brief  Increases the value of the given int pointer. Also saves that value in the given char array (string).
+  * @param  *value: Pointer to the Integer that should incremented.
+  * @param  *valueStr: Pointer to the char array (string) in which the increased int value should be saved to (as string of course).
+  * @param  semaphoreHandle: The semaphore used to protect the critical code that increases the int number and saves it in the string.
   * @retval None
   */
 void increase_values(int *value, char* valueStr, osSemaphoreId_t semaphoreHandle) {
@@ -366,8 +378,10 @@ void increase_values(int *value, char* valueStr, osSemaphoreId_t semaphoreHandle
 }
 
 /**
-  * @brief  TODO.
-  * @param  count: TODO.
+  * @brief  Divides the value of the given int pointer by half. Also saves that value in the given char array (string).
+  * @param  *value: Pointer to the Integer that should be divided by half.
+  * @param  *valueStr: Pointer to the char array (string) in which the divided int value should be saved to (as string of course).
+  * @param  semaphoreHandle: The semaphore used to protect the critical code that divides the int number and saves it in the string.
   * @retval None
   */
 void half_values(int *value, char* valueStr, osSemaphoreId_t semaphoreHandle) {
@@ -389,7 +403,7 @@ void half_values(int *value, char* valueStr, osSemaphoreId_t semaphoreHandle) {
 
 /* USER CODE BEGIN Header_task1_produce_data */
 /**
-  * @brief  Function implementing the producerTask1 thread.
+  * @brief  The producerTask1 thread periodically increases the t1 int value and its accompanying string of the global struct.
   * @param  argument: Not used
   * @retval None
   */
@@ -407,7 +421,7 @@ void task1_produce_data(void *argument)
 
 /* USER CODE BEGIN Header_task2_produce_data */
 /**
-* @brief Function implementing the producerTask2 thread.
+* @brief  The producerTask2 thread periodically increases the t2 int value and its accompanying string of the global struct.
 * @param argument: Not used
 * @retval None
 */
@@ -425,7 +439,7 @@ void task2_produce_data(void *argument)
 
 /* USER CODE BEGIN Header_consume_data */
 /**
-* @brief Function implementing the consumerTask thread.
+* @brief The consumerTask thread divides the t1* and t2* values of the global struct by half.
 * @param argument: Not used
 * @retval None
 */
@@ -444,7 +458,7 @@ void consume_data(void *argument)
 
 /* USER CODE BEGIN Header_watch_data */
 /**
-* @brief Function implementing the watcherTask thread.
+* @brief The watcherTask thread outputs all values via the UART2.
 * @param argument: Not used
 * @retval None
 */
