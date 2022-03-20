@@ -501,9 +501,9 @@ void watch_data(void *argument)
     #ifdef USE_SEM
       if(osSemaphoreAcquire(t1BinarySemHandle, osWaitForever) == osOK)
       {
-        // Nest the acquire statements instead of putting the inside one single if.
-        // If we would put them in one single if it could happen we acquire the first but not the second one,
-        // meaning the if branch would not run and we would not release the first semaphore!
+        // Nest the acquire statements instead of putting them all inside one single "if".
+        // If we would put them in one single "if" it could happen we acquire the first but not the second one,
+        // meaning that in case the "if" branch would not be executed we would not release the first semaphore anymore!
         if(osSemaphoreAcquire(t2BinarySemHandle, osWaitForever) == osOK)
         {
     #endif
@@ -515,7 +515,7 @@ void watch_data(void *argument)
       }
     #endif
 
-    osDelay(3000); // enough time to watch on the screen what's going on ;)
+    osDelay(3000); // Enough (screen) time to watch what's going on ;)
   }
   /* USER CODE END watch_data */
 }
