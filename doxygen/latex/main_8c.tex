@@ -1,0 +1,554 @@
+\hypertarget{main_8c}{}\section{main.\+c File Reference}
+\label{main_8c}\index{main.\+c@{main.\+c}}
+
+
+\+: Illustrates intertask synchronization with semaphores. Two producer tasks, in parallel, each increments a number of a global struct and saves the number in the same global struct inside an accompanying char array. Meanwhile, a consumer task divides the values by half (if they are odd) and updates the according char array as well. A fourth task outputs the values and the char array via the U\+A\+R\+T2. When not using semaphores the number values and their accompanying char arrays diverge. This can be tested by removing the \char`\"{}\+U\+S\+E\+\_\+\+S\+E\+M\char`\"{} define.  
+
+
+{\ttfamily \#include \char`\"{}main.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}cmsis\+\_\+os.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stdio.\+h\char`\"{}}\newline
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct__data}{\+\_\+data}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{main_8c_a0ce73b7419565289cf9636d1d986c348}{V\+A\+L\+U\+E\+\_\+\+S\+T\+R\+\_\+\+L\+E\+N\+G\+TH}~10
+\item 
+\#define \hyperlink{main_8c_a511a9e699f2301be9c4a23971b1ad91f}{U\+S\+E\+\_\+\+S\+EM}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{main_8c_a70af21c671abfcc773614a9a4f63d920}{System\+Clock\+\_\+\+Config} (void)
+\begin{DoxyCompactList}\small\item\em System Clock Configuration. \end{DoxyCompactList}\item 
+void \hyperlink{main_8c_a84e0e9d2d3427309a578d5713972e221}{task1\+\_\+produce\+\_\+data} (void $\ast$argument)
+\begin{DoxyCompactList}\small\item\em The producer\+Task1 thread periodically increases the t1 int value and its accompanying string of the global struct. \end{DoxyCompactList}\item 
+void \hyperlink{main_8c_a38292040474990cc2529a06ecf8a0df5}{task2\+\_\+produce\+\_\+data} (void $\ast$argument)
+\begin{DoxyCompactList}\small\item\em The producer\+Task2 thread periodically increases the t2 int value and its accompanying string of the global struct. \end{DoxyCompactList}\item 
+void \hyperlink{main_8c_a41733061875b23c27d52d47220e9ad74}{consume\+\_\+data} (void $\ast$argument)
+\begin{DoxyCompactList}\small\item\em The consumer\+Task thread divides the t1$\ast$ and t2$\ast$ values of the global struct by half. \end{DoxyCompactList}\item 
+void \hyperlink{main_8c_aa6493daa3a4e00e2f42f45753bd94d61}{watch\+\_\+data} (void $\ast$argument)
+\begin{DoxyCompactList}\small\item\em The watcher\+Task thread outputs all values via the U\+A\+R\+T2. \end{DoxyCompactList}\item 
+void \hyperlink{main_8c_a51665ac69e690787059b27f786e0d9fb}{increase\+\_\+values} (int $\ast$value, char $\ast$value\+Str, os\+Semaphore\+Id\+\_\+t semaphore\+Handle)
+\begin{DoxyCompactList}\small\item\em Increases the value of the given int pointer. Also saves that value in the given char array (string). \end{DoxyCompactList}\item 
+void \hyperlink{main_8c_a1a5a220fc2bb710e181f039132c0975b}{half\+\_\+values} (int $\ast$value, char $\ast$value\+Str, os\+Semaphore\+Id\+\_\+t semaphore\+Handle)
+\begin{DoxyCompactList}\small\item\em Divides the value of the given int pointer by half. Also saves that value in the given char array (string). \end{DoxyCompactList}\item 
+int \hyperlink{main_8c_abc513dd972081ae765b6949a62872eb7}{\+\_\+\+\_\+io\+\_\+putchar} (int ch)
+\item 
+int \hyperlink{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{main} (void)
+\begin{DoxyCompactList}\small\item\em The application entry point. \end{DoxyCompactList}\item 
+void \hyperlink{main_8c_a8a3b0ad512a6e6c6157440b68d395eac}{H\+A\+L\+\_\+\+T\+I\+M\+\_\+\+Period\+Elapsed\+Callback} (T\+I\+M\+\_\+\+Handle\+Type\+Def $\ast$htim)
+\begin{DoxyCompactList}\small\item\em Period elapsed callback in non blocking mode. \end{DoxyCompactList}\item 
+void \hyperlink{main_8c_a1730ffe1e560465665eb47d9264826f9}{Error\+\_\+\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function is executed in case of error occurrence. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+U\+A\+R\+T\+\_\+\+Handle\+Type\+Def \hyperlink{main_8c_aa9479c261d65eecedd3d9582f7f0f89c}{huart2}
+\item 
+os\+Thread\+Id\+\_\+t \hyperlink{main_8c_a40b42e4a57e2d5e66cbf6ba34f874af7}{producer\+Task1\+Handle}
+\item 
+const os\+Thread\+Attr\+\_\+t \hyperlink{main_8c_a6d6c38becaa9fda25bde1e910a2d30a2}{producer\+Task1\+\_\+attributes}
+\item 
+os\+Thread\+Id\+\_\+t \hyperlink{main_8c_a768c88f8cdadeee298fbcb1518c4d451}{producer\+Task2\+Handle}
+\item 
+const os\+Thread\+Attr\+\_\+t \hyperlink{main_8c_a97d508c72edb09581d437fe6592466a3}{producer\+Task2\+\_\+attributes}
+\item 
+os\+Thread\+Id\+\_\+t \hyperlink{main_8c_a133a4b4ff04d5d17775a66880a61d1d2}{consumer\+Task\+Handle}
+\item 
+const os\+Thread\+Attr\+\_\+t \hyperlink{main_8c_aed14a7c3707e576d58386bc61afa5845}{consumer\+Task\+\_\+attributes}
+\item 
+os\+Thread\+Id\+\_\+t \hyperlink{main_8c_a5204b2ecbaa1d723c2f0172471b4a6db}{watcher\+Task\+Handle}
+\item 
+const os\+Thread\+Attr\+\_\+t \hyperlink{main_8c_abe77a036e31d098daaf8fe55b94976b1}{watcher\+Task\+\_\+attributes}
+\item 
+os\+Semaphore\+Id\+\_\+t \hyperlink{main_8c_abcfc8c50007c0ded43f8bcb243a54fec}{t1\+Binary\+Sem\+Handle}
+\item 
+const os\+Semaphore\+Attr\+\_\+t \hyperlink{main_8c_abb85038f1ff5ffb378803e6469ad9a6c}{t1\+Binary\+Sem\+\_\+attributes}
+\item 
+os\+Semaphore\+Id\+\_\+t \hyperlink{main_8c_a12921fec75ccb4629f767865562e59c8}{t2\+Binary\+Sem\+Handle}
+\item 
+const os\+Semaphore\+Attr\+\_\+t \hyperlink{main_8c_a98ed1eb902f3ef0c31a45b47c06fbdb2}{t2\+Binary\+Sem\+\_\+attributes}
+\item 
+struct \hyperlink{struct__data}{\+\_\+data} \hyperlink{main_8c_a87184e855f770e1fa6909873250f618d}{data}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\+: Illustrates intertask synchronization with semaphores. Two producer tasks, in parallel, each increments a number of a global struct and saves the number in the same global struct inside an accompanying char array. Meanwhile, a consumer task divides the values by half (if they are odd) and updates the according char array as well. A fourth task outputs the values and the char array via the U\+A\+R\+T2. When not using semaphores the number values and their accompanying char arrays diverge. This can be tested by removing the \char`\"{}\+U\+S\+E\+\_\+\+S\+E\+M\char`\"{} define. 
+
+\begin{DoxyAuthor}{Author}
+\+: Matthias Kurz 
+\end{DoxyAuthor}
+\begin{DoxyAttention}{Attention}
+
+\end{DoxyAttention}
+Copyright (c) 2022 S\+T\+Microelectronics. All rights reserved.
+
+This software is licensed under terms that can be found in the L\+I\+C\+E\+N\+SE file in the root directory of this software component. If no L\+I\+C\+E\+N\+SE file comes with this software, it is provided A\+S-\/\+IS. 
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{main_8c_a511a9e699f2301be9c4a23971b1ad91f}\label{main_8c_a511a9e699f2301be9c4a23971b1ad91f}} 
+\index{main.\+c@{main.\+c}!U\+S\+E\+\_\+\+S\+EM@{U\+S\+E\+\_\+\+S\+EM}}
+\index{U\+S\+E\+\_\+\+S\+EM@{U\+S\+E\+\_\+\+S\+EM}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{U\+S\+E\+\_\+\+S\+EM}{USE\_SEM}}
+{\footnotesize\ttfamily \#define U\+S\+E\+\_\+\+S\+EM}
+
+
+
+Definition at line 47 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a0ce73b7419565289cf9636d1d986c348}\label{main_8c_a0ce73b7419565289cf9636d1d986c348}} 
+\index{main.\+c@{main.\+c}!V\+A\+L\+U\+E\+\_\+\+S\+T\+R\+\_\+\+L\+E\+N\+G\+TH@{V\+A\+L\+U\+E\+\_\+\+S\+T\+R\+\_\+\+L\+E\+N\+G\+TH}}
+\index{V\+A\+L\+U\+E\+\_\+\+S\+T\+R\+\_\+\+L\+E\+N\+G\+TH@{V\+A\+L\+U\+E\+\_\+\+S\+T\+R\+\_\+\+L\+E\+N\+G\+TH}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{V\+A\+L\+U\+E\+\_\+\+S\+T\+R\+\_\+\+L\+E\+N\+G\+TH}{VALUE\_STR\_LENGTH}}
+{\footnotesize\ttfamily \#define V\+A\+L\+U\+E\+\_\+\+S\+T\+R\+\_\+\+L\+E\+N\+G\+TH~10}
+
+
+
+Definition at line 46 of file main.\+c.
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{main_8c_abc513dd972081ae765b6949a62872eb7}\label{main_8c_abc513dd972081ae765b6949a62872eb7}} 
+\index{main.\+c@{main.\+c}!\+\_\+\+\_\+io\+\_\+putchar@{\+\_\+\+\_\+io\+\_\+putchar}}
+\index{\+\_\+\+\_\+io\+\_\+putchar@{\+\_\+\+\_\+io\+\_\+putchar}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+io\+\_\+putchar()}{\_\_io\_putchar()}}
+{\footnotesize\ttfamily int \+\_\+\+\_\+io\+\_\+putchar (\begin{DoxyParamCaption}\item[{int}]{ch }\end{DoxyParamCaption})}
+
+
+
+Definition at line 127 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a41733061875b23c27d52d47220e9ad74}\label{main_8c_a41733061875b23c27d52d47220e9ad74}} 
+\index{main.\+c@{main.\+c}!consume\+\_\+data@{consume\+\_\+data}}
+\index{consume\+\_\+data@{consume\+\_\+data}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{consume\+\_\+data()}{consume\_data()}}
+{\footnotesize\ttfamily void consume\+\_\+data (\begin{DoxyParamCaption}\item[{void $\ast$}]{argument }\end{DoxyParamCaption})}
+
+
+
+The consumer\+Task thread divides the t1$\ast$ and t2$\ast$ values of the global struct by half. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argument} & Not used \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+
+Definition at line 453 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a1730ffe1e560465665eb47d9264826f9}\label{main_8c_a1730ffe1e560465665eb47d9264826f9}} 
+\index{main.\+c@{main.\+c}!Error\+\_\+\+Handler@{Error\+\_\+\+Handler}}
+\index{Error\+\_\+\+Handler@{Error\+\_\+\+Handler}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{Error\+\_\+\+Handler()}{Error\_Handler()}}
+{\footnotesize\ttfamily void Error\+\_\+\+Handler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This function is executed in case of error occurrence. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+
+Definition at line 551 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a8a3b0ad512a6e6c6157440b68d395eac}\label{main_8c_a8a3b0ad512a6e6c6157440b68d395eac}} 
+\index{main.\+c@{main.\+c}!H\+A\+L\+\_\+\+T\+I\+M\+\_\+\+Period\+Elapsed\+Callback@{H\+A\+L\+\_\+\+T\+I\+M\+\_\+\+Period\+Elapsed\+Callback}}
+\index{H\+A\+L\+\_\+\+T\+I\+M\+\_\+\+Period\+Elapsed\+Callback@{H\+A\+L\+\_\+\+T\+I\+M\+\_\+\+Period\+Elapsed\+Callback}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{H\+A\+L\+\_\+\+T\+I\+M\+\_\+\+Period\+Elapsed\+Callback()}{HAL\_TIM\_PeriodElapsedCallback()}}
+{\footnotesize\ttfamily void H\+A\+L\+\_\+\+T\+I\+M\+\_\+\+Period\+Elapsed\+Callback (\begin{DoxyParamCaption}\item[{T\+I\+M\+\_\+\+Handle\+Type\+Def $\ast$}]{htim }\end{DoxyParamCaption})}
+
+
+
+Period elapsed callback in non blocking mode. 
+
+\begin{DoxyNote}{Note}
+This function is called when T\+I\+M6 interrupt took place, inside H\+A\+L\+\_\+\+T\+I\+M\+\_\+\+I\+R\+Q\+Handler(). It makes a direct call to H\+A\+L\+\_\+\+Inc\+Tick() to increment a global variable \char`\"{}uw\+Tick\char`\"{} used as application time base. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em htim} & \+: T\+IM handle \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+
+Definition at line 534 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a1a5a220fc2bb710e181f039132c0975b}\label{main_8c_a1a5a220fc2bb710e181f039132c0975b}} 
+\index{main.\+c@{main.\+c}!half\+\_\+values@{half\+\_\+values}}
+\index{half\+\_\+values@{half\+\_\+values}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{half\+\_\+values()}{half\_values()}}
+{\footnotesize\ttfamily void half\+\_\+values (\begin{DoxyParamCaption}\item[{int $\ast$}]{value,  }\item[{char $\ast$}]{value\+Str,  }\item[{os\+Semaphore\+Id\+\_\+t}]{semaphore\+Handle }\end{DoxyParamCaption})}
+
+
+
+Divides the value of the given int pointer by half. Also saves that value in the given char array (string). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$value} & Pointer to the Integer that should be divided by half. \\
+\hline
+{\em $\ast$value\+Str} & Pointer to the char array (string) in which the divided int value should be saved to (as string of course). \\
+\hline
+{\em semaphore\+Handle} & The semaphore used to protect the critical code that divides the int number and saves it in the string. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+
+Definition at line 391 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a51665ac69e690787059b27f786e0d9fb}\label{main_8c_a51665ac69e690787059b27f786e0d9fb}} 
+\index{main.\+c@{main.\+c}!increase\+\_\+values@{increase\+\_\+values}}
+\index{increase\+\_\+values@{increase\+\_\+values}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{increase\+\_\+values()}{increase\_values()}}
+{\footnotesize\ttfamily void increase\+\_\+values (\begin{DoxyParamCaption}\item[{int $\ast$}]{value,  }\item[{char $\ast$}]{value\+Str,  }\item[{os\+Semaphore\+Id\+\_\+t}]{semaphore\+Handle }\end{DoxyParamCaption})}
+
+
+
+Increases the value of the given int pointer. Also saves that value in the given char array (string). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$value} & Pointer to the Integer that should incremented. \\
+\hline
+{\em $\ast$value\+Str} & Pointer to the char array (string) in which the increased int value should be saved to (as string of course). \\
+\hline
+{\em semaphore\+Handle} & The semaphore used to protect the critical code that increases the int number and saves it in the string. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+
+Definition at line 370 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{main_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+\index{main.\+c@{main.\+c}!main@{main}}
+\index{main@{main}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+The application entry point. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em int} & \\
+\hline
+\end{DoxyRetVals}
+
+
+Definition at line 153 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a70af21c671abfcc773614a9a4f63d920}\label{main_8c_a70af21c671abfcc773614a9a4f63d920}} 
+\index{main.\+c@{main.\+c}!System\+Clock\+\_\+\+Config@{System\+Clock\+\_\+\+Config}}
+\index{System\+Clock\+\_\+\+Config@{System\+Clock\+\_\+\+Config}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{System\+Clock\+\_\+\+Config()}{SystemClock\_Config()}}
+{\footnotesize\ttfamily void System\+Clock\+\_\+\+Config (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+System Clock Configuration. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+Configure the main internal regulator output voltage
+
+Configure L\+SE Drive Capability
+
+Initializes the R\+CC Oscillators according to the specified parameters in the R\+C\+C\+\_\+\+Osc\+Init\+Type\+Def structure.
+
+Initializes the C\+PU, A\+HB and A\+PB buses clocks
+
+Enable M\+SI Auto calibration
+
+Definition at line 248 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a84e0e9d2d3427309a578d5713972e221}\label{main_8c_a84e0e9d2d3427309a578d5713972e221}} 
+\index{main.\+c@{main.\+c}!task1\+\_\+produce\+\_\+data@{task1\+\_\+produce\+\_\+data}}
+\index{task1\+\_\+produce\+\_\+data@{task1\+\_\+produce\+\_\+data}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{task1\+\_\+produce\+\_\+data()}{task1\_produce\_data()}}
+{\footnotesize\ttfamily void task1\+\_\+produce\+\_\+data (\begin{DoxyParamCaption}\item[{void $\ast$}]{argument }\end{DoxyParamCaption})}
+
+
+
+The producer\+Task1 thread periodically increases the t1 int value and its accompanying string of the global struct. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argument} & Not used \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+
+Definition at line 417 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a38292040474990cc2529a06ecf8a0df5}\label{main_8c_a38292040474990cc2529a06ecf8a0df5}} 
+\index{main.\+c@{main.\+c}!task2\+\_\+produce\+\_\+data@{task2\+\_\+produce\+\_\+data}}
+\index{task2\+\_\+produce\+\_\+data@{task2\+\_\+produce\+\_\+data}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{task2\+\_\+produce\+\_\+data()}{task2\_produce\_data()}}
+{\footnotesize\ttfamily void task2\+\_\+produce\+\_\+data (\begin{DoxyParamCaption}\item[{void $\ast$}]{argument }\end{DoxyParamCaption})}
+
+
+
+The producer\+Task2 thread periodically increases the t2 int value and its accompanying string of the global struct. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argument} & Not used \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+
+Definition at line 435 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_aa6493daa3a4e00e2f42f45753bd94d61}\label{main_8c_aa6493daa3a4e00e2f42f45753bd94d61}} 
+\index{main.\+c@{main.\+c}!watch\+\_\+data@{watch\+\_\+data}}
+\index{watch\+\_\+data@{watch\+\_\+data}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{watch\+\_\+data()}{watch\_data()}}
+{\footnotesize\ttfamily void watch\+\_\+data (\begin{DoxyParamCaption}\item[{void $\ast$}]{argument }\end{DoxyParamCaption})}
+
+
+
+The watcher\+Task thread outputs all values via the U\+A\+R\+T2. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argument} & Not used \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+
+Definition at line 472 of file main.\+c.
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{main_8c_aed14a7c3707e576d58386bc61afa5845}\label{main_8c_aed14a7c3707e576d58386bc61afa5845}} 
+\index{main.\+c@{main.\+c}!consumer\+Task\+\_\+attributes@{consumer\+Task\+\_\+attributes}}
+\index{consumer\+Task\+\_\+attributes@{consumer\+Task\+\_\+attributes}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{consumer\+Task\+\_\+attributes}{consumerTask\_attributes}}
+{\footnotesize\ttfamily const os\+Thread\+Attr\+\_\+t consumer\+Task\+\_\+attributes}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+  .name = \textcolor{stringliteral}{"consumerTask"},
+  .stack\_size = 128 * 4,
+  .priority = (osPriority\_t) osPriorityNormal,
+\}
+\end{DoxyCode}
+
+
+Definition at line 74 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a133a4b4ff04d5d17775a66880a61d1d2}\label{main_8c_a133a4b4ff04d5d17775a66880a61d1d2}} 
+\index{main.\+c@{main.\+c}!consumer\+Task\+Handle@{consumer\+Task\+Handle}}
+\index{consumer\+Task\+Handle@{consumer\+Task\+Handle}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{consumer\+Task\+Handle}{consumerTaskHandle}}
+{\footnotesize\ttfamily os\+Thread\+Id\+\_\+t consumer\+Task\+Handle}
+
+
+
+Definition at line 73 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a87184e855f770e1fa6909873250f618d}\label{main_8c_a87184e855f770e1fa6909873250f618d}} 
+\index{main.\+c@{main.\+c}!data@{data}}
+\index{data@{data}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{data}{data}}
+{\footnotesize\ttfamily struct \hyperlink{struct__data}{\+\_\+data}  data}
+
+\mbox{\Hypertarget{main_8c_aa9479c261d65eecedd3d9582f7f0f89c}\label{main_8c_aa9479c261d65eecedd3d9582f7f0f89c}} 
+\index{main.\+c@{main.\+c}!huart2@{huart2}}
+\index{huart2@{huart2}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{huart2}{huart2}}
+{\footnotesize\ttfamily U\+A\+R\+T\+\_\+\+Handle\+Type\+Def huart2}
+
+
+
+Definition at line 56 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a6d6c38becaa9fda25bde1e910a2d30a2}\label{main_8c_a6d6c38becaa9fda25bde1e910a2d30a2}} 
+\index{main.\+c@{main.\+c}!producer\+Task1\+\_\+attributes@{producer\+Task1\+\_\+attributes}}
+\index{producer\+Task1\+\_\+attributes@{producer\+Task1\+\_\+attributes}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{producer\+Task1\+\_\+attributes}{producerTask1\_attributes}}
+{\footnotesize\ttfamily const os\+Thread\+Attr\+\_\+t producer\+Task1\+\_\+attributes}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+  .name = \textcolor{stringliteral}{"producerTask1"},
+  .stack\_size = 128 * 4,
+  .priority = (osPriority\_t) osPriorityNormal,
+\}
+\end{DoxyCode}
+
+
+Definition at line 60 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a40b42e4a57e2d5e66cbf6ba34f874af7}\label{main_8c_a40b42e4a57e2d5e66cbf6ba34f874af7}} 
+\index{main.\+c@{main.\+c}!producer\+Task1\+Handle@{producer\+Task1\+Handle}}
+\index{producer\+Task1\+Handle@{producer\+Task1\+Handle}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{producer\+Task1\+Handle}{producerTask1Handle}}
+{\footnotesize\ttfamily os\+Thread\+Id\+\_\+t producer\+Task1\+Handle}
+
+
+
+Definition at line 59 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a97d508c72edb09581d437fe6592466a3}\label{main_8c_a97d508c72edb09581d437fe6592466a3}} 
+\index{main.\+c@{main.\+c}!producer\+Task2\+\_\+attributes@{producer\+Task2\+\_\+attributes}}
+\index{producer\+Task2\+\_\+attributes@{producer\+Task2\+\_\+attributes}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{producer\+Task2\+\_\+attributes}{producerTask2\_attributes}}
+{\footnotesize\ttfamily const os\+Thread\+Attr\+\_\+t producer\+Task2\+\_\+attributes}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+  .name = \textcolor{stringliteral}{"producerTask2"},
+  .stack\_size = 128 * 4,
+  .priority = (osPriority\_t) osPriorityNormal,
+\}
+\end{DoxyCode}
+
+
+Definition at line 67 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a768c88f8cdadeee298fbcb1518c4d451}\label{main_8c_a768c88f8cdadeee298fbcb1518c4d451}} 
+\index{main.\+c@{main.\+c}!producer\+Task2\+Handle@{producer\+Task2\+Handle}}
+\index{producer\+Task2\+Handle@{producer\+Task2\+Handle}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{producer\+Task2\+Handle}{producerTask2Handle}}
+{\footnotesize\ttfamily os\+Thread\+Id\+\_\+t producer\+Task2\+Handle}
+
+
+
+Definition at line 66 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_abb85038f1ff5ffb378803e6469ad9a6c}\label{main_8c_abb85038f1ff5ffb378803e6469ad9a6c}} 
+\index{main.\+c@{main.\+c}!t1\+Binary\+Sem\+\_\+attributes@{t1\+Binary\+Sem\+\_\+attributes}}
+\index{t1\+Binary\+Sem\+\_\+attributes@{t1\+Binary\+Sem\+\_\+attributes}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{t1\+Binary\+Sem\+\_\+attributes}{t1BinarySem\_attributes}}
+{\footnotesize\ttfamily const os\+Semaphore\+Attr\+\_\+t t1\+Binary\+Sem\+\_\+attributes}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+  .name = \textcolor{stringliteral}{"t1BinarySem"}
+\}
+\end{DoxyCode}
+
+
+Definition at line 88 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_abcfc8c50007c0ded43f8bcb243a54fec}\label{main_8c_abcfc8c50007c0ded43f8bcb243a54fec}} 
+\index{main.\+c@{main.\+c}!t1\+Binary\+Sem\+Handle@{t1\+Binary\+Sem\+Handle}}
+\index{t1\+Binary\+Sem\+Handle@{t1\+Binary\+Sem\+Handle}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{t1\+Binary\+Sem\+Handle}{t1BinarySemHandle}}
+{\footnotesize\ttfamily os\+Semaphore\+Id\+\_\+t t1\+Binary\+Sem\+Handle}
+
+
+
+Definition at line 87 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a98ed1eb902f3ef0c31a45b47c06fbdb2}\label{main_8c_a98ed1eb902f3ef0c31a45b47c06fbdb2}} 
+\index{main.\+c@{main.\+c}!t2\+Binary\+Sem\+\_\+attributes@{t2\+Binary\+Sem\+\_\+attributes}}
+\index{t2\+Binary\+Sem\+\_\+attributes@{t2\+Binary\+Sem\+\_\+attributes}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{t2\+Binary\+Sem\+\_\+attributes}{t2BinarySem\_attributes}}
+{\footnotesize\ttfamily const os\+Semaphore\+Attr\+\_\+t t2\+Binary\+Sem\+\_\+attributes}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+  .name = \textcolor{stringliteral}{"t2BinarySem"}
+\}
+\end{DoxyCode}
+
+
+Definition at line 93 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a12921fec75ccb4629f767865562e59c8}\label{main_8c_a12921fec75ccb4629f767865562e59c8}} 
+\index{main.\+c@{main.\+c}!t2\+Binary\+Sem\+Handle@{t2\+Binary\+Sem\+Handle}}
+\index{t2\+Binary\+Sem\+Handle@{t2\+Binary\+Sem\+Handle}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{t2\+Binary\+Sem\+Handle}{t2BinarySemHandle}}
+{\footnotesize\ttfamily os\+Semaphore\+Id\+\_\+t t2\+Binary\+Sem\+Handle}
+
+
+
+Definition at line 92 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_abe77a036e31d098daaf8fe55b94976b1}\label{main_8c_abe77a036e31d098daaf8fe55b94976b1}} 
+\index{main.\+c@{main.\+c}!watcher\+Task\+\_\+attributes@{watcher\+Task\+\_\+attributes}}
+\index{watcher\+Task\+\_\+attributes@{watcher\+Task\+\_\+attributes}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{watcher\+Task\+\_\+attributes}{watcherTask\_attributes}}
+{\footnotesize\ttfamily const os\+Thread\+Attr\+\_\+t watcher\+Task\+\_\+attributes}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+  .name = \textcolor{stringliteral}{"watcherTask"},
+  .stack\_size = 128 * 4,
+  .priority = (osPriority\_t) osPriorityNormal,
+\}
+\end{DoxyCode}
+
+
+Definition at line 81 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a5204b2ecbaa1d723c2f0172471b4a6db}\label{main_8c_a5204b2ecbaa1d723c2f0172471b4a6db}} 
+\index{main.\+c@{main.\+c}!watcher\+Task\+Handle@{watcher\+Task\+Handle}}
+\index{watcher\+Task\+Handle@{watcher\+Task\+Handle}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{watcher\+Task\+Handle}{watcherTaskHandle}}
+{\footnotesize\ttfamily os\+Thread\+Id\+\_\+t watcher\+Task\+Handle}
+
+
+
+Definition at line 80 of file main.\+c.
+

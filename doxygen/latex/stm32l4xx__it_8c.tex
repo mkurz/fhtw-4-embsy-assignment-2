@@ -1,0 +1,183 @@
+\hypertarget{stm32l4xx__it_8c}{}\section{stm32l4xx\+\_\+it.\+c File Reference}
+\label{stm32l4xx__it_8c}\index{stm32l4xx\+\_\+it.\+c@{stm32l4xx\+\_\+it.\+c}}
+
+
+Interrupt Service Routines.  
+
+
+{\ttfamily \#include \char`\"{}main.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stm32l4xx\+\_\+it.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{stm32l4xx__it_8c_a6ad7a5e3ee69cb6db6a6b9111ba898bc}{N\+M\+I\+\_\+\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles Non maskable interrupt. \end{DoxyCompactList}\item 
+void \hyperlink{stm32l4xx__it_8c_a2bffc10d5bd4106753b7c30e86903bea}{Hard\+Fault\+\_\+\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles Hard fault interrupt. \end{DoxyCompactList}\item 
+void \hyperlink{stm32l4xx__it_8c_a3150f74512510287a942624aa9b44cc5}{Mem\+Manage\+\_\+\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles Memory management fault. \end{DoxyCompactList}\item 
+void \hyperlink{stm32l4xx__it_8c_a850cefb17a977292ae5eb4cafa9976c3}{Bus\+Fault\+\_\+\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles Prefetch fault, memory access fault. \end{DoxyCompactList}\item 
+void \hyperlink{stm32l4xx__it_8c_a1d98923de2ed6b7309b66f9ba2971647}{Usage\+Fault\+\_\+\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles Undefined instruction or illegal state. \end{DoxyCompactList}\item 
+void \hyperlink{stm32l4xx__it_8c_adbdfb05858cc36fc520974df37ec3cb0}{Debug\+Mon\+\_\+\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles Debug monitor. \end{DoxyCompactList}\item 
+void \hyperlink{stm32l4xx__it_8c_a0ca6fd0e6f77921dd1123539857ba0a8}{U\+S\+A\+R\+T2\+\_\+\+I\+R\+Q\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles U\+S\+A\+R\+T2 global interrupt. \end{DoxyCompactList}\item 
+void \hyperlink{stm32l4xx__it_8c_a0839a45f331c4c067939b9c4533bbf4d}{T\+I\+M6\+\_\+\+D\+A\+C\+\_\+\+I\+R\+Q\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles T\+I\+M6 global interrupt, D\+AC channel1 and channel2 underrun error interrupts. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+U\+A\+R\+T\+\_\+\+Handle\+Type\+Def \hyperlink{stm32l4xx__it_8c_aa9479c261d65eecedd3d9582f7f0f89c}{huart2}
+\item 
+T\+I\+M\+\_\+\+Handle\+Type\+Def \hyperlink{stm32l4xx__it_8c_a1564492831a79fa18466467c3420c3c3}{htim6}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Interrupt Service Routines. 
+
+\begin{DoxyAttention}{Attention}
+
+\end{DoxyAttention}
+Copyright (c) 2022 S\+T\+Microelectronics. All rights reserved.
+
+This software is licensed under terms that can be found in the L\+I\+C\+E\+N\+SE file in the root directory of this software component. If no L\+I\+C\+E\+N\+SE file comes with this software, it is provided A\+S-\/\+IS. 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{stm32l4xx__it_8c_a850cefb17a977292ae5eb4cafa9976c3}\label{stm32l4xx__it_8c_a850cefb17a977292ae5eb4cafa9976c3}} 
+\index{stm32l4xx\+\_\+it.\+c@{stm32l4xx\+\_\+it.\+c}!Bus\+Fault\+\_\+\+Handler@{Bus\+Fault\+\_\+\+Handler}}
+\index{Bus\+Fault\+\_\+\+Handler@{Bus\+Fault\+\_\+\+Handler}!stm32l4xx\+\_\+it.\+c@{stm32l4xx\+\_\+it.\+c}}
+\subsubsection{\texorpdfstring{Bus\+Fault\+\_\+\+Handler()}{BusFault\_Handler()}}
+{\footnotesize\ttfamily void Bus\+Fault\+\_\+\+Handler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This function handles Prefetch fault, memory access fault. 
+
+
+
+Definition at line 116 of file stm32l4xx\+\_\+it.\+c.
+
+\mbox{\Hypertarget{stm32l4xx__it_8c_adbdfb05858cc36fc520974df37ec3cb0}\label{stm32l4xx__it_8c_adbdfb05858cc36fc520974df37ec3cb0}} 
+\index{stm32l4xx\+\_\+it.\+c@{stm32l4xx\+\_\+it.\+c}!Debug\+Mon\+\_\+\+Handler@{Debug\+Mon\+\_\+\+Handler}}
+\index{Debug\+Mon\+\_\+\+Handler@{Debug\+Mon\+\_\+\+Handler}!stm32l4xx\+\_\+it.\+c@{stm32l4xx\+\_\+it.\+c}}
+\subsubsection{\texorpdfstring{Debug\+Mon\+\_\+\+Handler()}{DebugMon\_Handler()}}
+{\footnotesize\ttfamily void Debug\+Mon\+\_\+\+Handler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This function handles Debug monitor. 
+
+
+
+Definition at line 146 of file stm32l4xx\+\_\+it.\+c.
+
+\mbox{\Hypertarget{stm32l4xx__it_8c_a2bffc10d5bd4106753b7c30e86903bea}\label{stm32l4xx__it_8c_a2bffc10d5bd4106753b7c30e86903bea}} 
+\index{stm32l4xx\+\_\+it.\+c@{stm32l4xx\+\_\+it.\+c}!Hard\+Fault\+\_\+\+Handler@{Hard\+Fault\+\_\+\+Handler}}
+\index{Hard\+Fault\+\_\+\+Handler@{Hard\+Fault\+\_\+\+Handler}!stm32l4xx\+\_\+it.\+c@{stm32l4xx\+\_\+it.\+c}}
+\subsubsection{\texorpdfstring{Hard\+Fault\+\_\+\+Handler()}{HardFault\_Handler()}}
+{\footnotesize\ttfamily void Hard\+Fault\+\_\+\+Handler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This function handles Hard fault interrupt. 
+
+
+
+Definition at line 86 of file stm32l4xx\+\_\+it.\+c.
+
+\mbox{\Hypertarget{stm32l4xx__it_8c_a3150f74512510287a942624aa9b44cc5}\label{stm32l4xx__it_8c_a3150f74512510287a942624aa9b44cc5}} 
+\index{stm32l4xx\+\_\+it.\+c@{stm32l4xx\+\_\+it.\+c}!Mem\+Manage\+\_\+\+Handler@{Mem\+Manage\+\_\+\+Handler}}
+\index{Mem\+Manage\+\_\+\+Handler@{Mem\+Manage\+\_\+\+Handler}!stm32l4xx\+\_\+it.\+c@{stm32l4xx\+\_\+it.\+c}}
+\subsubsection{\texorpdfstring{Mem\+Manage\+\_\+\+Handler()}{MemManage\_Handler()}}
+{\footnotesize\ttfamily void Mem\+Manage\+\_\+\+Handler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This function handles Memory management fault. 
+
+
+
+Definition at line 101 of file stm32l4xx\+\_\+it.\+c.
+
+\mbox{\Hypertarget{stm32l4xx__it_8c_a6ad7a5e3ee69cb6db6a6b9111ba898bc}\label{stm32l4xx__it_8c_a6ad7a5e3ee69cb6db6a6b9111ba898bc}} 
+\index{stm32l4xx\+\_\+it.\+c@{stm32l4xx\+\_\+it.\+c}!N\+M\+I\+\_\+\+Handler@{N\+M\+I\+\_\+\+Handler}}
+\index{N\+M\+I\+\_\+\+Handler@{N\+M\+I\+\_\+\+Handler}!stm32l4xx\+\_\+it.\+c@{stm32l4xx\+\_\+it.\+c}}
+\subsubsection{\texorpdfstring{N\+M\+I\+\_\+\+Handler()}{NMI\_Handler()}}
+{\footnotesize\ttfamily void N\+M\+I\+\_\+\+Handler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This function handles Non maskable interrupt. 
+
+
+
+Definition at line 71 of file stm32l4xx\+\_\+it.\+c.
+
+\mbox{\Hypertarget{stm32l4xx__it_8c_a0839a45f331c4c067939b9c4533bbf4d}\label{stm32l4xx__it_8c_a0839a45f331c4c067939b9c4533bbf4d}} 
+\index{stm32l4xx\+\_\+it.\+c@{stm32l4xx\+\_\+it.\+c}!T\+I\+M6\+\_\+\+D\+A\+C\+\_\+\+I\+R\+Q\+Handler@{T\+I\+M6\+\_\+\+D\+A\+C\+\_\+\+I\+R\+Q\+Handler}}
+\index{T\+I\+M6\+\_\+\+D\+A\+C\+\_\+\+I\+R\+Q\+Handler@{T\+I\+M6\+\_\+\+D\+A\+C\+\_\+\+I\+R\+Q\+Handler}!stm32l4xx\+\_\+it.\+c@{stm32l4xx\+\_\+it.\+c}}
+\subsubsection{\texorpdfstring{T\+I\+M6\+\_\+\+D\+A\+C\+\_\+\+I\+R\+Q\+Handler()}{TIM6\_DAC\_IRQHandler()}}
+{\footnotesize\ttfamily void T\+I\+M6\+\_\+\+D\+A\+C\+\_\+\+I\+R\+Q\+Handler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This function handles T\+I\+M6 global interrupt, D\+AC channel1 and channel2 underrun error interrupts. 
+
+
+
+Definition at line 180 of file stm32l4xx\+\_\+it.\+c.
+
+\mbox{\Hypertarget{stm32l4xx__it_8c_a1d98923de2ed6b7309b66f9ba2971647}\label{stm32l4xx__it_8c_a1d98923de2ed6b7309b66f9ba2971647}} 
+\index{stm32l4xx\+\_\+it.\+c@{stm32l4xx\+\_\+it.\+c}!Usage\+Fault\+\_\+\+Handler@{Usage\+Fault\+\_\+\+Handler}}
+\index{Usage\+Fault\+\_\+\+Handler@{Usage\+Fault\+\_\+\+Handler}!stm32l4xx\+\_\+it.\+c@{stm32l4xx\+\_\+it.\+c}}
+\subsubsection{\texorpdfstring{Usage\+Fault\+\_\+\+Handler()}{UsageFault\_Handler()}}
+{\footnotesize\ttfamily void Usage\+Fault\+\_\+\+Handler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This function handles Undefined instruction or illegal state. 
+
+
+
+Definition at line 131 of file stm32l4xx\+\_\+it.\+c.
+
+\mbox{\Hypertarget{stm32l4xx__it_8c_a0ca6fd0e6f77921dd1123539857ba0a8}\label{stm32l4xx__it_8c_a0ca6fd0e6f77921dd1123539857ba0a8}} 
+\index{stm32l4xx\+\_\+it.\+c@{stm32l4xx\+\_\+it.\+c}!U\+S\+A\+R\+T2\+\_\+\+I\+R\+Q\+Handler@{U\+S\+A\+R\+T2\+\_\+\+I\+R\+Q\+Handler}}
+\index{U\+S\+A\+R\+T2\+\_\+\+I\+R\+Q\+Handler@{U\+S\+A\+R\+T2\+\_\+\+I\+R\+Q\+Handler}!stm32l4xx\+\_\+it.\+c@{stm32l4xx\+\_\+it.\+c}}
+\subsubsection{\texorpdfstring{U\+S\+A\+R\+T2\+\_\+\+I\+R\+Q\+Handler()}{USART2\_IRQHandler()}}
+{\footnotesize\ttfamily void U\+S\+A\+R\+T2\+\_\+\+I\+R\+Q\+Handler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This function handles U\+S\+A\+R\+T2 global interrupt. 
+
+
+
+Definition at line 166 of file stm32l4xx\+\_\+it.\+c.
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{stm32l4xx__it_8c_a1564492831a79fa18466467c3420c3c3}\label{stm32l4xx__it_8c_a1564492831a79fa18466467c3420c3c3}} 
+\index{stm32l4xx\+\_\+it.\+c@{stm32l4xx\+\_\+it.\+c}!htim6@{htim6}}
+\index{htim6@{htim6}!stm32l4xx\+\_\+it.\+c@{stm32l4xx\+\_\+it.\+c}}
+\subsubsection{\texorpdfstring{htim6}{htim6}}
+{\footnotesize\ttfamily T\+I\+M\+\_\+\+Handle\+Type\+Def htim6}
+
+
+
+Definition at line 28 of file stm32l4xx\+\_\+hal\+\_\+timebase\+\_\+tim.\+c.
+
+\mbox{\Hypertarget{stm32l4xx__it_8c_aa9479c261d65eecedd3d9582f7f0f89c}\label{stm32l4xx__it_8c_aa9479c261d65eecedd3d9582f7f0f89c}} 
+\index{stm32l4xx\+\_\+it.\+c@{stm32l4xx\+\_\+it.\+c}!huart2@{huart2}}
+\index{huart2@{huart2}!stm32l4xx\+\_\+it.\+c@{stm32l4xx\+\_\+it.\+c}}
+\subsubsection{\texorpdfstring{huart2}{huart2}}
+{\footnotesize\ttfamily U\+A\+R\+T\+\_\+\+Handle\+Type\+Def huart2}
+
+
+
+Definition at line 56 of file main.\+c.
+
