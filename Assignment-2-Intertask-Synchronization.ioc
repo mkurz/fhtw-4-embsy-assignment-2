@@ -1,9 +1,10 @@
 #MicroXplorer Configuration settings - do not modify
 FREERTOS.BinarySemaphores01=t1BinarySem,Dynamic,NULL;t2BinarySem,Dynamic,NULL
 FREERTOS.FootprintOK=true
-FREERTOS.IPParameters=Tasks01,configENABLE_FPU,configUSE_NEWLIB_REENTRANT,FootprintOK,BinarySemaphores01
+FREERTOS.IPParameters=Tasks01,configENABLE_FPU,configUSE_NEWLIB_REENTRANT,FootprintOK,BinarySemaphores01,configTOTAL_HEAP_SIZE
 FREERTOS.Tasks01=producerTask1,24,128,task1_produce_data,Default,NULL,Dynamic,NULL,NULL;producerTask2,24,128,task2_produce_data,Default,NULL,Dynamic,NULL,NULL;consumerTask,24,128,consume_data,Default,NULL,Dynamic,NULL,NULL;watcherTask,24,128,watch_data,Default,NULL,Dynamic,NULL,NULL
 FREERTOS.configENABLE_FPU=1
+FREERTOS.configTOTAL_HEAP_SIZE=10000
 FREERTOS.configUSE_NEWLIB_REENTRANT=1
 File.Version=6
 KeepUserPlacement=false
