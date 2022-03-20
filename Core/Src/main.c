@@ -425,6 +425,7 @@ void watch_data(void *argument)
     printf("All values in one single printf statement:\n");
     printf("------------------------------------------\n");
     printf("t1value: %d, t1str: %s, t2value: %d, t2str: %s\n\n", data.t1value, data.t1str, data.t2value, data.t2str);
+
     printf("Each value in its own printf statement:\n");
     printf("---------------------------------------\n");
     printf("t1value: %d\n", data.t1value);
