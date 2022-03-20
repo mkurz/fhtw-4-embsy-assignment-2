@@ -92,7 +92,7 @@ void consume_data(void *argument);
 void watch_data(void *argument);
 
 /* USER CODE BEGIN PFP */
-
+void increase_values(int *value, char* valueStr);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -328,6 +328,16 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+/**
+  * @brief  TODO.
+  * @param  count: TODO.
+  * @retval None
+  */
+void increase_values(int *value, char* valueStr) {
+  (*value)++; // increment operator does NOT have atomic behavior (read value, then increment it, then write it back into memory)
+  snprintf(valueStr, VALUE_STR_LENGTH, "%d", *value);
+}
+
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_task1_produce_data */
@@ -343,10 +353,7 @@ void task1_produce_data(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    data.t1value = data.t1value + 1;
-    //osDelay(1);
-    snprintf(data.t1str, sizeof(data.t1str), "%d", data.t1value);
-    osDelay(1);
+    increase_values(&data.t1value, data.t1str);
   }
   /* USER CODE END 5 */
 }
@@ -364,10 +371,7 @@ void task2_produce_data(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    data.t2value = data.t2value + 1;
-    //osDelay(1);
-    snprintf(data.t2str, sizeof(data.t2str), "%d", data.t2value);
-    osDelay(1);
+    increase_values(&data.t2value, data.t2str);
   }
   /* USER CODE END task2_produce_data */
 }
