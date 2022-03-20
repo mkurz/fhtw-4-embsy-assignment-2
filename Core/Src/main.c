@@ -367,7 +367,8 @@ static void MX_GPIO_Init(void)
   * @param  semaphoreHandle: The semaphore used to protect the critical code that increases the int number and saves it in the string.
   * @retval None
   */
-void increase_values(int *value, char* valueStr, osSemaphoreId_t semaphoreHandle) {
+void increase_values(int *value, char* valueStr, osSemaphoreId_t semaphoreHandle)
+{
   #ifdef USE_SEM
     if(osSemaphoreAcquire(semaphoreHandle, osWaitForever) == osOK)
     {
@@ -387,12 +388,14 @@ void increase_values(int *value, char* valueStr, osSemaphoreId_t semaphoreHandle
   * @param  semaphoreHandle: The semaphore used to protect the critical code that divides the int number and saves it in the string.
   * @retval None
   */
-void half_values(int *value, char* valueStr, osSemaphoreId_t semaphoreHandle) {
+void half_values(int *value, char* valueStr, osSemaphoreId_t semaphoreHandle)
+{
   #ifdef USE_SEM
     if(osSemaphoreAcquire(semaphoreHandle, osWaitForever) == osOK)
     {
   #endif
-      if((*value) % 2 == 0) {
+      if((*value) % 2 == 0)
+      {
         (*value) /= 2; // Not atomic
         snprintf(valueStr, VALUE_STR_LENGTH, "%d", *value);
       }
