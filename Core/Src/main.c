@@ -72,6 +72,16 @@ const osThreadAttr_t watcherTask_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for t1BinarySem */
+osSemaphoreId_t t1BinarySemHandle;
+const osSemaphoreAttr_t t1BinarySem_attributes = {
+  .name = "t1BinarySem"
+};
+/* Definitions for t2BinarySem */
+osSemaphoreId_t t2BinarySemHandle;
+const osSemaphoreAttr_t t2BinarySem_attributes = {
+  .name = "t2BinarySem"
+};
 /* USER CODE BEGIN PV */
 struct _data {
   int t1value;
@@ -161,6 +171,13 @@ int main(void)
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
+
+  /* Create the semaphores(s) */
+  /* creation of t1BinarySem */
+  t1BinarySemHandle = osSemaphoreNew(1, 1, &t1BinarySem_attributes);
+
+  /* creation of t2BinarySem */
+  t2BinarySemHandle = osSemaphoreNew(1, 1, &t2BinarySem_attributes);
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
