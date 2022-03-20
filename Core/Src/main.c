@@ -44,7 +44,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define VALUE_STR_LENGTH 10
-#define USE_SEM
+#define USE_SEM // Remove or comment to see what happens without semaphores
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
