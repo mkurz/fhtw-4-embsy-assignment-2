@@ -93,6 +93,7 @@ void watch_data(void *argument);
 
 /* USER CODE BEGIN PFP */
 void increase_values(int *value, char* valueStr);
+void half_values(int *value, char* valueStr);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -338,6 +339,18 @@ void increase_values(int *value, char* valueStr) {
   snprintf(valueStr, VALUE_STR_LENGTH, "%d", *value);
 }
 
+/**
+  * @brief  TODO.
+  * @param  count: TODO.
+  * @retval None
+  */
+void half_values(int *value, char* valueStr) {
+  if((*value) % 2 == 0) {
+    (*value) /= 2; // Not atomic
+    snprintf(valueStr, VALUE_STR_LENGTH, "%d", *value);
+  }
+}
+
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_task1_produce_data */
@@ -389,17 +402,8 @@ void consume_data(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    if(data.t1value % 2 == 0) {
-      data.t1value = data.t1value / 2;
-      osDelay(50);
-      snprintf(data.t1str, sizeof(data.t1str), "%d", data.t1value);
-    }
-    if(data.t2value % 2 == 0) {
-      data.t2value = data.t2value / 2;
-      osDelay(50);
-      snprintf(data.t2str, sizeof(data.t2str), "%d", data.t2value);
-    }
-    osDelay(2);
+    half_values(&data.t1value, data.t1str);
+    half_values(&data.t2value, data.t2str);
   }
   /* USER CODE END consume_data */
 }
