@@ -94,6 +94,8 @@ const osSemaphoreAttr_t t2BinarySem_attributes = {
   .name = "t2BinarySem"
 };
 /* USER CODE BEGIN PV */
+
+/* The global struct all tasks access */
 struct _data {
   int t1value;
   char t1str[VALUE_STR_LENGTH];
@@ -115,6 +117,7 @@ void watch_data(void *argument);
 /* USER CODE BEGIN PFP */
 void increase_values(int *value, char* valueStr, osSemaphoreId_t semaphoreHandle);
 void half_values(int *value, char* valueStr, osSemaphoreId_t semaphoreHandle);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
