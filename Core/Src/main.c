@@ -417,13 +417,17 @@ void watch_data(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    //printf("\n\n");
-    printf("t1value: %d t1str: %s | t2value: %d t2str: %s\n", data.t1value, data.t1str, data.t2value, data.t2str);
+    printf("\n\n\n\n");
+    printf("All values in one single printf statement:\n");
+    printf("------------------------------------------\n");
+    printf("t1value: %d, t1str: %s, t2value: %d, t2str: %s\n\n", data.t1value, data.t1str, data.t2value, data.t2str);
+    printf("Each value in its own printf statement:\n");
+    printf("---------------------------------------\n");
     printf("t1value: %d\n", data.t1value);
     printf("t1str: %s\n", data.t1str);
     printf("t2value: %d\n", data.t2value);
     printf("t2str: %s\n", data.t2str);
-    osDelay(90);
+    osDelay(3000); // enough time to watch on the screen what's going on ;)
   }
   /* USER CODE END watch_data */
 }
