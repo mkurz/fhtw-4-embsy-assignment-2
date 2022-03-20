@@ -34,6 +34,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define VALUE_STR_LENGTH 10
+#define USE_SEM
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -102,8 +103,8 @@ void consume_data(void *argument);
 void watch_data(void *argument);
 
 /* USER CODE BEGIN PFP */
-void increase_values(int *value, char* valueStr);
-void half_values(int *value, char* valueStr);
+void increase_values(int *value, char* valueStr, osSemaphoreId_t semaphoreHandle);
+void half_values(int *value, char* valueStr, osSemaphoreId_t semaphoreHandle);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -351,9 +352,17 @@ static void MX_GPIO_Init(void)
   * @param  count: TODO.
   * @retval None
   */
-void increase_values(int *value, char* valueStr) {
-  (*value)++; // increment operator does NOT have atomic behavior (read value, then increment it, then write it back into memory)
-  snprintf(valueStr, VALUE_STR_LENGTH, "%d", *value);
+void increase_values(int *value, char* valueStr, osSemaphoreId_t semaphoreHandle) {
+  #ifdef USE_SEM
+    if(osSemaphoreAcquire(semaphoreHandle, osWaitForever) == osOK)
+    {
+  #endif
+      (*value)++; // increment operator does NOT have atomic behavior (read value, then increment it, then write it back into memory)
+      snprintf(valueStr, VALUE_STR_LENGTH, "%d", *value);
+  #ifdef USE_SEM
+      osSemaphoreRelease(semaphoreHandle);
+    }
+  #endif
 }
 
 /**
@@ -361,11 +370,19 @@ void increase_values(int *value, char* valueStr) {
   * @param  count: TODO.
   * @retval None
   */
-void half_values(int *value, char* valueStr) {
-  if((*value) % 2 == 0) {
-    (*value) /= 2; // Not atomic
-    snprintf(valueStr, VALUE_STR_LENGTH, "%d", *value);
-  }
+void half_values(int *value, char* valueStr, osSemaphoreId_t semaphoreHandle) {
+  #ifdef USE_SEM
+    if(osSemaphoreAcquire(semaphoreHandle, osWaitForever) == osOK)
+    {
+  #endif
+      if((*value) % 2 == 0) {
+        (*value) /= 2; // Not atomic
+        snprintf(valueStr, VALUE_STR_LENGTH, "%d", *value);
+      }
+  #ifdef USE_SEM
+      osSemaphoreRelease(semaphoreHandle);
+    }
+  #endif
 }
 
 /* USER CODE END 4 */
@@ -383,7 +400,7 @@ void task1_produce_data(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    increase_values(&data.t1value, data.t1str);
+    increase_values(&data.t1value, data.t1str, t1BinarySemHandle);
   }
   /* USER CODE END 5 */
 }
@@ -401,7 +418,7 @@ void task2_produce_data(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    increase_values(&data.t2value, data.t2str);
+    increase_values(&data.t2value, data.t2str, t2BinarySemHandle);
   }
   /* USER CODE END task2_produce_data */
 }
@@ -419,8 +436,8 @@ void consume_data(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    half_values(&data.t1value, data.t1str);
-    half_values(&data.t2value, data.t2str);
+    half_values(&data.t1value, data.t1str, t1BinarySemHandle);
+    half_values(&data.t2value, data.t2str, t2BinarySemHandle);
   }
   /* USER CODE END consume_data */
 }
@@ -439,16 +456,48 @@ void watch_data(void *argument)
   for(;;)
   {
     printf("\n\n\n\n");
-    printf("All values in one single printf statement:\n");
-    printf("------------------------------------------\n");
-    printf("t1value: %d, t1str: %s, t2value: %d, t2str: %s\n\n", data.t1value, data.t1str, data.t2value, data.t2str);
-
     printf("Each value in its own printf statement:\n");
     printf("---------------------------------------\n");
-    printf("t1value: %d\n", data.t1value);
-    printf("t1str: %s\n", data.t1str);
-    printf("t2value: %d\n", data.t2value);
-    printf("t2str: %s\n", data.t2str);
+    #ifdef USE_SEM
+      if(osSemaphoreAcquire(t1BinarySemHandle, osWaitForever) == osOK)
+      {
+    #endif
+        printf("t1value: %d\n", data.t1value);
+        printf("t1str: %s\n", data.t1str);
+    #ifdef USE_SEM
+        osSemaphoreRelease(t1BinarySemHandle);
+      }
+    #endif
+    #ifdef USE_SEM
+      if(osSemaphoreAcquire(t2BinarySemHandle, osWaitForever) == osOK)
+      {
+    #endif
+        printf("t2value: %d\n", data.t2value);
+        printf("t2str: %s\n", data.t2str);
+    #ifdef USE_SEM
+        osSemaphoreRelease(t2BinarySemHandle);
+      }
+    #endif
+
+    printf("\nAll values in one single printf statement:\n");
+    printf("------------------------------------------\n");
+    #ifdef USE_SEM
+      if(osSemaphoreAcquire(t1BinarySemHandle, osWaitForever) == osOK)
+      {
+        // Nest the acquire statements instead of putting the inside one single if.
+        // If we would put them in one single if it could happen we acquire the first but not the second one,
+        // meaning the if branch would not run and we would not release the first semaphore!
+        if(osSemaphoreAcquire(t2BinarySemHandle, osWaitForever) == osOK)
+        {
+    #endif
+          printf("t1value: %d, t1str: %s, t2value: %d, t2str: %s\n", data.t1value, data.t1str, data.t2value, data.t2str);
+    #ifdef USE_SEM
+          osSemaphoreRelease(t2BinarySemHandle); // Release the inner semaphore
+        }
+        osSemaphoreRelease(t1BinarySemHandle); // Release the outer semaphore
+      }
+    #endif
+
     osDelay(3000); // enough time to watch on the screen what's going on ;)
   }
   /* USER CODE END watch_data */
